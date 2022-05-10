@@ -35,7 +35,7 @@
       <h2 v-else-if="type == 'กระตุ้นเข็มที่ 4'" style="color: #ff648c">
         {{ type }}
       </h2>
-      <v-form v-model="valid">
+      <v-form ref="form" v-model="valid">
         <h1 class="mt-15">ข้อมูลทั่วไป</h1>
 
         <v-row>
@@ -83,7 +83,7 @@
             ></v-select
           ></v-col>
           <v-col cols="12" md="5">
-            <span>เลขบัตรประจำตัว {{ firstname }}</span>
+            <span>เลขบัตรประจำตัว {{ identity }}</span>
             <v-text-field
               v-model="identity"
               :rules="IDRules"
@@ -197,7 +197,12 @@
         ></v-checkbox>
       </v-row>
       <div class="text-center my-8">
-        <v-btn :disabled="!checkbox" color="primary" class="px-10">
+        <v-btn
+          :disabled="!checkbox"
+          color="primary"
+          class="px-10"
+          @click="register()"
+        >
           ถัดไป
         </v-btn>
       </div>
@@ -225,7 +230,7 @@ export default {
       checkbox: false,
       nameRules: [
         (v) => !!v || 'Name is required',
-        (v) => v.length <= 10 || 'Name must be less than 10 characters',
+        (v) => v.length <= 20 || 'Name must be less than 10 characters',
       ],
       IDRules: [
         (v) => !!v || 'ID is required',
@@ -242,7 +247,32 @@ export default {
     return { type }
   },
   methods: {
-    async register() {},
+    async register() {
+      console.log(this.type)
+      const data = {
+        id: Math.floor(Math.random() * (1 - 999 + 1) + 999),
+        vaccine: this.type,
+        pname: this.prename,
+        fname: this.firstname,
+        lname: this.lastname,
+        type_identity: this.identityType,
+        identity: this.identity,
+        dob: this.date,
+        address: this.address,
+        province: this.provice,
+        district: this.district,
+        zone: this.zone,
+        phone: this.phone,
+      }
+      if (this.$refs.form.validate()) {
+        await this.$axios
+          .$post('http://localhost:3000/users/create', data)
+          .then((res) => console.log(res))
+          this.$router.push({path: '/confirm', query: {user: data}});
+      } else {
+        alert('Please Fill all inputs')
+      }
+    },
   },
 }
 </script>
