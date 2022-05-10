@@ -22,7 +22,7 @@ app.post('/users/create', async (req, res) => {
   const user = req.body;
   const client = new MongoClient(uri);
   await client.connect();
-  await client.db('mydb').collection('users').insertOne({
+  await client.db('myDB').collection('users').insertOne({
     id: parseInt(user.id),
     vaccine: user.vaccine,
     pname: user.pname,
@@ -50,7 +50,7 @@ app.post('/appointment', async (req, res) => {
   const user = req.body;
   const client = new MongoClient(uri);
   await client.connect();
-  await client.db('mydb').collection('appointment').insertOne({
+  await client.db('myDB').collection('appointment').insertOne({
     id: parseInt(user.id),
     date: user.date
 
