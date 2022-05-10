@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app style="font-family: Kanit">
     <v-app-bar fixed app color="white" elevation="1">
       <v-container grid-list-xs>
         <v-img
@@ -10,10 +10,17 @@
       </v-container>
     </v-app-bar>
     <v-main>
-      <v-container style="font-family: Kanit">
+      <v-container>
         <Nuxt />
       </v-container>
     </v-main>
+    <hr />
+    <v-footer color="white">
+      <v-col class="text-center" cols="12">
+        © 2565 บมจ.โทเทิ่ล แอ็คเซ็ส คอมมูนิเคชั่น <br />
+        บริษัทในกลุ่มเทเลนอร์
+      </v-col>
+    </v-footer>
   </v-app>
 </template>
 
