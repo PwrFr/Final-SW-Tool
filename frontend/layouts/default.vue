@@ -14,13 +14,7 @@
         <Nuxt />
       </v-container>
     </v-main>
-    <hr />
-    <v-footer color="white">
-      <v-col class="text-center" cols="12">
-        © 2565 บมจ.โทเทิ่ล แอ็คเซ็ส คอมมูนิเคชั่น <br />
-        บริษัทในกลุ่มเทเลนอร์
-      </v-col>
-    </v-footer>
+   
   </v-app>
 </template>
 

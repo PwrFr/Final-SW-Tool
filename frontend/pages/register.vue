@@ -35,32 +35,172 @@
       <h2 v-else-if="type == 'กระตุ้นเข็มที่ 4'" style="color: #ff648c">
         {{ type }}
       </h2>
+      <v-form v-model="valid">
+        <h1 class="mt-15">ข้อมูลทั่วไป</h1>
 
-      <v-row class="mt-5">
-        <v-col cols="12" md="4">
-          <span>asasd</span
-          ><v-select :items="items" label="โปรดเลือกคำนำหน้า" solo></v-select
-        ></v-col>
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="firstname"
-            :rules="nameRules"
-            solo
-            label="ชื่อภาษาไทย"
-            required
-          ></v-text-field>
-        </v-col>
+        <v-row>
+          <v-col cols="12" md="2">
+            <span>คำนำหน้า {{ prename }}</span
+            ><v-select
+              :rules="nameRules"
+              v-model="prename"
+              :items="items"
+              label="โปรดเลือกคำนำหน้า"
+              solo
+            ></v-select
+          ></v-col>
+          <v-col cols="12" md="5">
+            <span>ชื่อ {{ firstname }}</span>
+            <v-text-field
+              v-model="firstname"
+              :rules="nameRules"
+              solo
+              label="ชื่อภาษาไทย"
+              required
+            ></v-text-field>
+          </v-col>
 
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="lastname"
-            solo
-            :rules="nameRules"
-            label="นามสกุลภาษาไทย"
-            required
-          ></v-text-field>
-        </v-col>
+          <v-col cols="12" md="5">
+            <span>นามสกุล {{ lastname }}</span>
+            <v-text-field
+              v-model="lastname"
+              solo
+              :rules="nameRules"
+              label="นามสกุลภาษาไทย"
+              required
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12" md="2">
+            <span>บัตรประจำตัว {{ identityType }}</span
+            ><v-select
+              :rules="nameRules"
+              v-model="identityType"
+              :items="IDtype"
+              label="โปรดเลือก ประเภทบัตร"
+              solo
+            ></v-select
+          ></v-col>
+          <v-col cols="12" md="5">
+            <span>เลขบัตรประจำตัว {{ firstname }}</span>
+            <v-text-field
+              v-model="identity"
+              :rules="IDRules"
+              solo
+              label="หมายเลขบัตรของคุณ"
+              required
+            ></v-text-field>
+          </v-col>
+
+          <v-col cols="12" md="5">
+            <span>วัน/เดือน/ปีเกิด {{ date }}</span>
+
+            <v-dialog
+              ref="dialog"
+              v-model="modal"
+              :return-value.sync="date"
+              persistent
+              width="290px"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  solo
+                  v-model="date"
+                  label="วัน/เดือน/ปีเกิด"
+                  readonly
+                  v-bind="attrs"
+                  :rules="nameRules"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker v-model="date" scrollable>
+                <v-spacer></v-spacer>
+                <v-btn text color="primary" @click="modal = false">
+                  Cancel
+                </v-btn>
+                <v-btn text color="primary" @click="$refs.dialog.save(date)">
+                  OK
+                </v-btn>
+              </v-date-picker>
+            </v-dialog>
+          </v-col>
+        </v-row>
+        <h1 class="mt-15">ที่อยู่</h1>
+
+        <v-row>
+          <v-col cols="12" md="6">
+            <span>รายละเอียดที่อยู่ {{ address }}</span>
+            <v-text-field
+              v-model="address"
+              :rules="nameRules"
+              solo
+              label="บ้านเลขที่ ชื่อถนน"
+              required
+            ></v-text-field>
+          </v-col>
+
+          <v-col cols="12" md="6">
+            <span>จังหวัด {{ provice }}</span>
+            <v-text-field
+              v-model="provice"
+              solo
+              :rules="nameRules"
+              label="จังหวัด"
+              required
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12" md="6">
+            <span>เขต / อำเภอ {{ zone }}</span>
+            <v-text-field
+              v-model="zone"
+              :rules="nameRules"
+              solo
+              label="เขต / อำเภอ"
+              required
+            ></v-text-field>
+          </v-col>
+
+          <v-col cols="12" md="6">
+            <span>แขวง / ตำบล {{ district }}</span>
+            <v-text-field
+              v-model="district"
+              solo
+              :rules="nameRules"
+              label="แขวง / ตำบล"
+              required
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col cols="12" md="6">
+            <span>หมายเลขโทรศัพท์ของคุณ {{ phone }}</span>
+            <v-text-field
+              v-model="phone"
+              :rules="nameRules"
+              solo
+              label="กรอกหมายเลขดีเทค"
+              required
+            ></v-text-field>
+          </v-col>
+        </v-row>
+      </v-form>
+      <hr />
+      <v-row justify="center" align="center">
+        <v-checkbox
+          class="text-center mt-8"
+          v-model="checkbox"
+          label="ฉันยอมรับเงื่อนไขและข้อกำหนดใช้งาน"
+        ></v-checkbox>
       </v-row>
+      <div class="text-center my-8">
+        <v-btn :disabled="!checkbox" color="primary" class="px-10">
+          ถัดไป
+        </v-btn>
+      </div>
     </v-col>
   </v-row>
 </template>
@@ -68,11 +208,41 @@
 <script>
 export default {
   data() {
-    return {}
+    return {
+      items: ['ด.ช.', 'ด.ญ.', 'นาย', 'นาง', 'นางสาว'],
+      valid: false,
+      prename: '',
+      firstname: '',
+      lastname: '',
+      IDtype: ['บัตรประจำตัวประชาชน', 'บัตรชมพู', 'หนังสือเดินทาง'],
+      identityType: '',
+      identity: '',
+      address: '',
+      provice: '',
+      zone: '',
+      district: '',
+      phone: '',
+      checkbox: false,
+      nameRules: [
+        (v) => !!v || 'Name is required',
+        (v) => v.length <= 10 || 'Name must be less than 10 characters',
+      ],
+      IDRules: [
+        (v) => !!v || 'ID is required',
+        (v) => v.length == 13 || 'Name must be 11 characters',
+      ],
+      date: '',
+      menu: false,
+      modal: false,
+      menu2: false,
+    }
   },
   async asyncData({ query }) {
     const type = query.type
     return { type }
+  },
+  methods: {
+    async register() {},
   },
 }
 </script>
